@@ -11,5 +11,5 @@
 5. Start a server `nodemon src/server`
 
 ### Optional
-1. Install nodemon `npm install nodemon -g`
-2. Install schema generator `npm install apollo-codegen -g`
+1. Install nodemon `npm install nodemon -g` for live reloading
+2. Install schema generator `npm install apollo-codegen -g` for schema generating
