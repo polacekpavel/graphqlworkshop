@@ -1,27 +1,21 @@
+const user = require('./db').user;
+
 exports.resolvers = {
     Query: {
         users(root, args, context) {
-            return [{
-                firstName: 'First name 1',
-                lastName: 'Last name'
-            },{
-                firstName: 'First name 2',
-                lastName: 'Last name'
-            }]
+            return user.findAll();
         },
         user(root, args, context) {
-            return {
-                firstName: 'First name 1',
-                lastName: args.githubUsername
-            }
+            return user.findOne({ where: { githubUsername: args.githubUsername }});
         }
     },
     Mutation: {
         createUser(root, args, context) {
-            return {
+            return user.create({
                 firstName: args.firstName,
-                lastName: args.lastName
-            }
+                lastName: args.lastName,
+                githubUsername: args.githubUsername
+            })
         }
     },
     User: {
