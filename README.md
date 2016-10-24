@@ -7,8 +7,8 @@
 1. `git clone https://github.com/polacekpavel/graphqlworkshop`
 2. `cd graphqlworkshop`
 3. `npm install`
-4. Start a client `npm start`
-5. Start a server `nodemon src/server`
+4. Start a client `npm start` -> http://localhost:3000
+5. Start a server `nodemon src/server` -> http://localhost:8000
 
 ### Optional
 1. Install nodemon `npm install nodemon -g` for live reloading
