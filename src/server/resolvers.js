@@ -1,6 +1,6 @@
 const user = require('./db').user;
 const DataLoader = require('dataloader');
-
+const fetch = require('node-fetch');
 const locationLoader = new DataLoader((ids) => {
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${ids}`)
         .then((res) => res.json())
@@ -23,7 +23,7 @@ exports.resolvers = {
             return user.findAll();
         },
         user(root, args, context) {
-            return user.findOne({ where: { githubUsername: args.githubUsername }});
+            return user.findOne({ where: { githubUsername: args.githubUsername } });
         }
     },
     Mutation: {
@@ -37,28 +37,45 @@ exports.resolvers = {
     },
     User: {
         github(root, args, context) {
-            return {
-                username: root.firstName,
-                location: 'Prague',
-                avatarSrc: 'https://avatars0.githubusercontent.com/u/273551?v=3&s=140'
-            }
+            return fetch(`https://api.github.com/users/${root.githubUsername}`)
+                .then((res) => res.json())
+                .then((res) => {
+                    return {
+                        username: root.githubUsername,
+                        avatarSrc: res.avatar_url,
+                        location: res.location
+                    }
+                });
         }
     },
     Github: {
         events(root, args, context) {
-            return [{
-                eventType: 'Fork',
-            },{
-                eventType: 'Watch',
-            }]
-
+            return fetch(`https://api.github.com/users/${root.username}/events`)
+                .then((res) => res.json())
+                .then((res) => {
+                    return res.map((event) => {
+                        return {
+                            eventType: event.type,
+                            createdAt: event.created_at,
+                            location: root.location
+                        }
+                    });
+                })
         }
     },
     Event: {
         weather(root, args, context) {
-            return {
-                condition: 'fog'
-            }
+            const apiKey = '458461701954a3df9a801e38d6033d17';
+            return locationLoader.load(root.location).then((res) => {
+                const time = Math.round(new Date(root.createdAt).getTime() / 1000);
+                return fetch(`https://api.darksky.net/forecast/${apiKey}/${res.lat},${res.long},${time}?exclude=currently,flags`)
+                    .then((res) => res.json())
+                    .then((res) => {
+                        return {
+                            condition: res.daily.data[0].icon
+                        }
+                    });
+            });
         }
     }
 }

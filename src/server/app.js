@@ -23,9 +23,9 @@ const executableSchema = makeExecutableSchema({
 
 
 addSchemaLevelResolveFunction(executableSchema, (root, args, context, info) => {
-    if (!context || !context.authorization) {
-        throw new Error('non-auth');
-    }
+    // if (!context || !context.authorization) {
+    //     throw new Error('non-auth');
+    // }
 });
 
 app.use('/graphql', apolloExpress((req) => {
