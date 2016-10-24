@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-
+import update from 'react-addons-update';
 class CreateUser extends Component {
     constructor(props) {
         super(props);
@@ -34,11 +34,31 @@ class CreateUser extends Component {
                 <button className="btn btn-success"
                         onClick={() => {
                             this.props.mutate({
-                              variables: {
-                                  firstName: this.state.firstName,
-                                  lastName: this.state.lastName,
-                                  githubUsername: this.state.githubUsername
-                              }
+                                variables: {
+                                    firstName: this.state.firstName,
+                                    lastName: this.state.lastName,
+                                    githubUsername: this.state.githubUsername
+                                },
+                                optimisticResponse: {
+                                    createUser: {
+                                        id: 123123,
+                                        firstName: this.state.firstName,
+                                        lastName: this.state.lastName,
+                                        github: {
+                                            username: this.state.githubUsername
+                                        }
+                                    }
+                                },
+                                updateQueries: {
+                                    getAllUsers: (prev, { mutationResult }) => {
+                                        const newUser = mutationResult.data.createUser;
+                                        return update(prev, {
+                                            users: {
+                                                $unshift: [newUser]
+                                            }
+                                        });
+                                    }
+                                }
                             }).then(() => this.props.onCreate());
                         }}>
                     Save
@@ -59,6 +79,4 @@ const CreateUserQuery = gql`
         }
     }
 `
-export default graphql(CreateUserQuery, {
-
-})(CreateUser);
+export default graphql(CreateUserQuery, {})(CreateUser);

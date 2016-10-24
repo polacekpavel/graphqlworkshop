@@ -19,7 +19,7 @@ class UserDetail extends Component {
                     <h3>Loading</h3>
                 }
             </div>
-            {this.props.data.user && this.props.data.user.github &&
+            { !this.props.data.loading && this.props.data.user && this.props.data.user.github &&
             <div>
                 <div>
                     <img src={this.props.data.user.github.avatarSrc} width={50} height={50}/>

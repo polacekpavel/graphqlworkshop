@@ -23,7 +23,7 @@ class Users extends Component {
 
         let content = <div>
             {
-                this.props.data.users && this.props.data.users.map((item) => {
+                !this.props.data.loading && this.props.data.users && this.props.data.users.map((item) => {
                     return <div className="row" onClick={() => {
                         if (this.props.onClick) {
                             this.props.onClick(item);

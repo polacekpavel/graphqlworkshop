@@ -1,27 +1,28 @@
-```javascript
-//client batching
-const client = new ApolloClient({
-    networkInterface,
-    shouldBatch: true
-});
-````
-
 ````javascript
-//Server batching and caching
-const locationLoader = new DataLoader((ids) => {
-    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${ids}`)
-        .then((res) => res.json())
-        .then((res) => {
-            const lat = res.results[0].geometry.location.lat;
-            const long = res.results[0].geometry.location.lng;
+import update from 'react-addons-update';
+...
 
-            return [{
-                lat,
-                long
-            }];
-        })
-}, {
-    batch: false
-});
-
+this.props.mutate({
+                                variables: {
+                                    ...
+                                },
+                                optimisticResponse: {
+                                    createUser: {
+                                        id: 100,
+                                        firstName: this.state.firstName,
+                                        lastName: this.state.lastName,
+                                      github: {
+                                          username: this.state.githubUsername
+                                      }
+                                    }
+                                },
+                                updateQueries: {
+                                    getAllUsers: (prev, { mutationResult }) => {
+                                        const newUser = mutationResult.data.createUser;
+                                        return update(prev, {
+                                            users: {
+                                                $unshift: [newUser]
+                                            }
+                                        });
+                                   
 ````

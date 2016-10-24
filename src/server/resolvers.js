@@ -1,6 +1,8 @@
 const user = require('./db').user;
 const DataLoader = require('dataloader');
 const fetch = require('node-fetch');
+const Promise = require('bluebird');
+
 const locationLoader = new DataLoader((ids) => {
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${ids}`)
         .then((res) => res.json())
@@ -28,11 +30,11 @@ exports.resolvers = {
     },
     Mutation: {
         createUser(root, args, context) {
-            return user.create({
+            Promise.delay(5000).then(() => user.create({
                 firstName: args.firstName,
                 lastName: args.lastName,
                 githubUsername: args.githubUsername
-            })
+            }));
         }
     },
     User: {
