@@ -8,7 +8,7 @@ const app = express();
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
 const apolloExpress = require('apollo-server').apolloExpress;
 const graphiqlExpress = require('apollo-server').graphiqlExpress;
-
+const addSchemaLevelResolveFunction = require('graphql-tools').addSchemaLevelResolveFunction;
 const schema = require('./schema').schema;
 const resolvers = require('./resolvers').resolvers;
 
@@ -20,9 +20,20 @@ const executableSchema = makeExecutableSchema({
     typeDefs: schema,
     resolvers: resolvers
 });
+
+
+addSchemaLevelResolveFunction(executableSchema, (root, args, context, info) => {
+    if (!context || !context.authorization) {
+        throw new Error('non-auth');
+    }
+});
+
 app.use('/graphql', apolloExpress((req) => {
     return {
-        schema:executableSchema
+        schema:executableSchema,
+        context: {
+            authorization: req.headers.authorization
+        }
     }
 }));
 

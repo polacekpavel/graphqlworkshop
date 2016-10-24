@@ -1,39 +1,34 @@
 ```javascript
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
-````
-```javascript
- <button className="btn btn-success"
-                        onClick={() => {
-                            this.props.mutate({
-                                variables: {
-                                    firstName: this.state.firstName,
-                                    lastName: this.state.lastName,
-                                    githubUsername: this.state.githubUsername
-                                }
-                            }).then(() => this.props.onCreate());
-
-                        }}>
-                    Save
-                </button>
-````
-```javascript
-const CreateUserQuery = gql`
-    mutation createUser ($firstName: String!, $lastName: String!, $githubUsername: String!) {
-        createUser(firstName: $firstName, lastName: $lastName, githubUsername: $githubUsername) {
-            firstName,
-            id,
-            github {
-                username
-            }
-            lastName
+//Client index .js
+networkInterface.use([{
+    applyMiddleware(req, next) {
+        if (!req.options.headers) {
+            req.options.headers = {};
         }
+
+        req.options.headers.authorization = 'xxx' //github api personal access token; 
+        next();
     }
-`
-export default graphql(CreateUserQuery)(CreateUser);
+}]);
+````
+```javascript
+//Server App.js
+const addSchemaLevelResolveFunction = require('graphql-tools').addSchemaLevelResolveFunction;
+addSchemaLevelResolveFunction(executableSchema, (root, args, context, info) => {
+    if (!context || !context.authorization) {
+        throw new Error('non-auth');
+    }
+});
 ````
 
-Refetch data
 ```javascript
-this.users.data.refetch();
+app.use('/graphql', apolloExpress((req) => {
+    return {
+        schema: executableSchema,
+        context: {
+            authorization: req.headers.authorization
+        },
+    }
+}));
+
 ````

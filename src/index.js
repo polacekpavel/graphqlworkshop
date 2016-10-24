@@ -7,6 +7,17 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 const networkInterface = createNetworkInterface('http://localhost:8000/graphql');
 
+networkInterface.use([{
+    applyMiddleware(req, next) {
+        if (!req.options.headers) {
+            req.options.headers = {};
+        }
+
+        req.options.headers.authorization = 'xxx' //github api personal access token;
+        next();
+    }
+}]);
+
 const client  = new ApolloClient({
     networkInterface: networkInterface
 });
