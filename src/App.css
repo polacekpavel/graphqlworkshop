@@ -1,0 +1,118 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 150px;
+}
+.eventTable {
+    width: 600px;
+    margin: 0 auto;
+    table-layout: fixed;
+}
+
+.eventTable td {
+    border-bottom: 1px solid #eeeeee;
+    padding: 3px;
+}
+.row {
+    min-height: 40px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 25px;
+}
+
+.row:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.App-header {
+    background-color: #111517;
+    height: 260px;
+    padding: 20px;
+    color: white;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    margin-bottom: 15px;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+.create-user-form {
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.create-user-form input {
+    margin: 5px;
+}
+
+.create-user-form button {
+    margin-top: 10px;
+    width: 100px;
+}
+
+.main-input {
+    border-radius: 5px;
+    height: 25px;
+    width: 250px;
+    font-size: 20px;
+    border: 1px solid gray;
+    padding: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    margin-bottom: 5px;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

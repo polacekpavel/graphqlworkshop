@@ -1,0 +1,15 @@
+# Plan
+1. Every functionality has own branch
+2. Every step has readme.md
+3. If you get lost you can checkout next step `git checkout step1` or take a look into readme
+
+## Step 0 
+1. `git clone https://github.com/polacekpavel/graphqlworkshop`
+2. `cd graphqlworkshop`
+3. `npm install`
+4. Start a client `npm start`
+5. Start a server `nodemon src/server`
+
+### Optional
+1. Install nodemon `npm install nodemon -g`
+2. Install schema generator `npm install apollo-codegen -g`
