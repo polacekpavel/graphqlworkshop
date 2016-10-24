@@ -29,6 +29,7 @@ export default class UserList extends Component {
             }
 
             {this.state.showCreateNewUser && <CreateUser onCreate={() => {
+                this.users.data.refetch();
                 this.setState({ showCreateNewUser: !this.state.showCreateNewUser })
             }
             }/> }
