@@ -11,11 +11,11 @@
       {
         "kind": "OBJECT",
         "name": "Query",
-        "description": "",
+        "description": "Entry point to our application",
         "fields": [
           {
             "name": "users",
-            "description": "",
+            "description": "List of all users",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -31,15 +31,19 @@
           },
           {
             "name": "user",
-            "description": "",
+            "description": "Get user detail",
             "args": [
               {
                 "name": "githubUsername",
                 "description": "",
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
@@ -68,13 +72,9 @@
             "description": "",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -151,13 +151,21 @@
             "description": "",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "location",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -202,19 +210,7 @@
         "description": "",
         "fields": [
           {
-            "name": "type",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "createdAt",
+            "name": "eventType",
             "description": "",
             "args": [],
             "type": {
@@ -269,11 +265,11 @@
       {
         "kind": "OBJECT",
         "name": "Mutation",
-        "description": "",
+        "description": "Entry point for modifications",
         "fields": [
           {
             "name": "createUser",
-            "description": "",
+            "description": "Create new user",
             "args": [
               {
                 "name": "firstName",

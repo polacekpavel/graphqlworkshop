@@ -1,26 +1,29 @@
 import React, { Component } from "react";
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 class Users extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isShowDetail: true,
-            users: [{
-                id: 1,
-                firstName: 'Test',
-                lastName: 'User 1'
-            }, {
-                id: 2,
-                firstName: 'Test',
-                lastName: 'User 2'
-            }]
+            // users: [{
+            //     id: 1,
+            //     firstName: 'Test',
+            //     lastName: 'User 1'
+            // }, {
+            //     id: 2,
+            //     firstName: 'Test',
+            //     lastName: 'User 2'
+            // }]
         }
     }
 
     render() {
+
         let content = <div>
             {
-                this.state.users.map((item) => {
+                this.props.data.users && this.props.data.users.map((item) => {
                     return <div className="row" onClick={() => {
                         if (this.props.onClick) {
                             this.props.onClick(item);
@@ -36,4 +39,16 @@ class Users extends Component {
     }
 }
 
-export default Users;
+const UsersQuery = gql`
+    query getAllUsers {
+        users {
+            id
+            firstName,
+            lastName,
+            github {
+                username
+            }
+        }
+    }
+`;
+export default graphql(UsersQuery)(Users);

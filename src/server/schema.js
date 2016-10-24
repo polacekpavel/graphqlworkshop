@@ -14,6 +14,7 @@ exports.schema = [`
     }
     
     type User {
+        id: Int,
         firstName: String
         lastName: String
         github: Github
