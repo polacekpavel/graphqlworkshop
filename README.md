@@ -1,34 +1,27 @@
 ```javascript
-//Client index .js
-networkInterface.use([{
-    applyMiddleware(req, next) {
-        if (!req.options.headers) {
-            req.options.headers = {};
-        }
-
-        req.options.headers.authorization = 'xxx' //github api personal access token; 
-        next();
-    }
-}]);
-````
-```javascript
-//Server App.js
-const addSchemaLevelResolveFunction = require('graphql-tools').addSchemaLevelResolveFunction;
-addSchemaLevelResolveFunction(executableSchema, (root, args, context, info) => {
-    if (!context || !context.authorization) {
-        throw new Error('non-auth');
-    }
+//client batching
+const client = new ApolloClient({
+    networkInterface,
+    shouldBatch: true
 });
 ````
 
-```javascript
-app.use('/graphql', apolloExpress((req) => {
-    return {
-        schema: executableSchema,
-        context: {
-            authorization: req.headers.authorization
-        },
-    }
-}));
+````javascript
+//Server batching and caching
+const locationLoader = new DataLoader((ids) => {
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${ids}`)
+        .then((res) => res.json())
+        .then((res) => {
+            const lat = res.results[0].geometry.location.lat;
+            const long = res.results[0].geometry.location.lng;
+
+            return [{
+                lat,
+                long
+            }];
+        })
+}, {
+    batch: false
+});
 
 ````

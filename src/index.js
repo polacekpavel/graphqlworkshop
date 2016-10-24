@@ -19,7 +19,8 @@ networkInterface.use([{
 }]);
 
 const client  = new ApolloClient({
-    networkInterface: networkInterface
+    networkInterface: networkInterface,
+    shouldBatch: true
 });
 
 ReactDOM.render(
