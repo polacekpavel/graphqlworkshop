@@ -79,4 +79,4 @@ const CreateUserQuery = gql`
         }
     }
 `
-export default graphql(CreateUserQuery, {})(CreateUser);
+export default graphql(CreateUserQuery)(CreateUser);

@@ -30,7 +30,7 @@ exports.resolvers = {
     },
     Mutation: {
         createUser(root, args, context) {
-            Promise.delay(5000).then(() => user.create({
+            return Promise.delay(5000).then(() => user.create({
                 firstName: args.firstName,
                 lastName: args.lastName,
                 githubUsername: args.githubUsername
