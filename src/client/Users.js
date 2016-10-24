@@ -7,12 +7,12 @@ class Users extends Component {
             isShowDetail: true,
             users: [{
                 id: 1,
-                firstName: 'Test',
-                lastName: 'User 1'
+                firstName: 'Pavel',
+                lastName: 'Polacek'
             }, {
                 id: 2,
-                firstName: 'Test',
-                lastName: 'User 2'
+                firstName: 'Michal',
+                lastName: 'Klacko'
             }]
         }
     }
