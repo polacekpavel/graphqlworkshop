@@ -414,6 +414,19 @@ const client = new ApolloClient({
 });
 ````
 
+API endpoints
+Google places api 
+`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`
+
+Weather api - time machine
+`https://api.darksky.net/forecast/${apiKey}/${lat},${long},${time}?exclude=currently,flags`
+
+Github events api
+`https://api.github.com/users/${username}/events`
+
+Github user detail api
+`https://api.github.com/users/${githubUsername}`
+
 ````javascript
 //Server batching and caching
 const locationLoader = new DataLoader((ids) => {
@@ -431,20 +444,91 @@ const locationLoader = new DataLoader((ids) => {
 }, {
     batch: false
 });
-
 ````
-Google places api 
-`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`
+Competed resolvers with funcionality
+````javascript
+const user = require('./db').user;
+const DataLoader = require('dataloader');
+const fetch = require('node-fetch');
+const locationLoader = new DataLoader((ids) => {
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${ids}`)
+        .then((res) => res.json())
+        .then((res) => {
+            const lat = res.results[0].geometry.location.lat;
+            const long = res.results[0].geometry.location.lng;
 
-Weather api - time machine
-`https://api.darksky.net/forecast/${apiKey}/${lat},${long},${time}?exclude=currently,flags`
+            return [{
+                lat,
+                long
+            }];
+        })
+}, {
+    batch: false
+});
 
-Github events api
-`https://api.github.com/users/${username}/events`
-
-Github user detail api
-`https://api.github.com/users/${githubUsername}`
-
+exports.resolvers = {
+    Query: {
+        users(root, args, context) {
+            return user.findAll();
+        },
+        user(root, args, context) {
+            return user.findOne({ where: { githubUsername: args.githubUsername } });
+        }
+    },
+    Mutation: {
+        createUser(root, args, context) {
+            return user.create({
+                firstName: args.firstName,
+                lastName: args.lastName,
+                githubUsername: args.githubUsername
+            })
+        }
+    },
+    User: {
+        github(root, args, context) {
+            return fetch(`https://api.github.com/users/${root.githubUsername}`)
+                .then((res) => res.json())
+                .then((res) => {
+                    return {
+                        username: root.githubUsername,
+                        avatarSrc: res.avatar_url,
+                        location: res.location
+                    }
+                });
+        }
+    },
+    Github: {
+        events(root, args, context) {
+            return fetch(`https://api.github.com/users/${root.username}/events`)
+                .then((res) => res.json())
+                .then((res) => {
+                    return res.map((event) => {
+                        return {
+                            eventType: event.type,
+                            createdAt: event.created_at,
+                            location: root.location
+                        }
+                    });
+                })
+        }
+    },
+    Event: {
+        weather(root, args, context) {
+            const apiKey = '458461701954a3df9a801e38d6033d17';
+            return locationLoader.load(root.location).then((res) => {
+                const time = Math.round(new Date(root.createdAt).getTime() / 1000);
+                return fetch(`https://api.darksky.net/forecast/${apiKey}/${res.lat},${res.long},${time}?exclude=currently,flags`)
+                    .then((res) => res.json())
+                    .then((res) => {
+                        return {
+                            condition: res.daily.data[0].icon
+                        }
+                    });
+            });
+        }
+    }
+}
+````
 
 #Step 7
 ````javascript
