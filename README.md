@@ -266,6 +266,9 @@ ReactDOM.render(
 2.Connect your react component with ApolloData (Users.js)
 
 ````javascript
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+
 class Users extends Component {
  ...   
 }
@@ -296,6 +299,7 @@ class UserDetail extends Component {
 const UserDetailQuery = gql`
     query getUsersDetail($githubUsername: String!) {
         user(githubUsername: $githubUsername) {
+            id,
             firstName,
             github {
                 avatarSrc,
