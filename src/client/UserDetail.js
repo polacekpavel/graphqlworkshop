@@ -17,7 +17,22 @@ class UserDetail extends Component {
                 <p>Prague</p>
             </div>
             <table className="eventTable">
-
+                <tr>
+                    <th>
+                        Event type
+                    </th>
+                    <th>
+                        Weather
+                    </th>
+                </tr>
+                <tr>
+                    <td>Fork</td>
+                    <td><img src={`weather/clear-day.png`} width={24} height={24}/></td>
+                </tr>
+                <tr>
+                    <td>Watch</td>
+                    <td><img src={`weather/clear-day.png`} width={24} height={24}/></td>
+                </tr>
             </table>
 
         </div>;
