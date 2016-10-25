@@ -50,6 +50,9 @@ Query: {
             }]
         }
     }
+.
+.
+.
 ```
 
 Express
@@ -76,6 +79,8 @@ app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql'
 }));
 ```
+
+Test your queries in graphiql [http://localhost:8000/graphiql](http://localhost:8000/graphiql) 
 #Step 2
 
 Postgres connection `postgres://oakbmqixdijogm:WaIgtJyBSg9KBHa7sasNzNwBc1@ec2-54-228-192-254.eu-west-1.compute.amazonaws.com:5432/db7uuofu104gv6`  
@@ -108,8 +113,30 @@ const User = db.models.User
 db.sync();
 
 exports.user = User;
+````
 
-```
+Resolvers.js
+````javascript
+  Query: {
+        users(root, args, context) {
+            return user.findAll();
+        },
+        user(root, args, context) {
+            return user.findOne({ where: { githubUsername: args.githubUsername }});
+        }
+    },
+    Mutation: {
+        createUser(root, args, context) {
+            return user.create({
+                firstName: args.firstName,
+                lastName: args.lastName,
+                githubUsername: args.githubUsername
+            })
+        }
+    },
+````
+
+Test your queries and mutation in graphiql [http://localhost:8000/graphiql](http://localhost:8000/graphiql)
 
 #Step 3
 
