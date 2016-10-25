@@ -275,6 +275,8 @@ const locationLoader = new DataLoader((ids) => {
 });
 
 ````
+Google places api 
+`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`
 
 Weather api - time machine
 `https://api.darksky.net/forecast/${apiKey}/${lat},${long},${time}?exclude=currently,flags`
