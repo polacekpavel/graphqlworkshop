@@ -276,6 +276,16 @@ const locationLoader = new DataLoader((ids) => {
 
 ````
 
+Weather api - time machine
+`https://api.darksky.net/forecast/${apiKey}/${lat},${long},${time}?exclude=currently,flags`
+
+Github events api
+`https://api.github.com/users/${username}/events`
+
+Github user detail api
+`https://api.github.com/users/${githubUsername}`
+
+
 #Step 7
 ````javascript
 import update from 'react-addons-update';
