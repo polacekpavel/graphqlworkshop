@@ -223,6 +223,7 @@ export default graphql(UserDetailQuery, {
 ````
 
 # Step 4
+CreateUser.js
 ```javascript
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
