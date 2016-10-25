@@ -8,7 +8,7 @@ class App extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={'./strvLogo.jpg'} className="App-logo" alt="logo"/>
-                    <h2>Awasome app in GrahpQL</h2>
+                    <h2>Awesome app in GraphQL</h2>
                 </div>
                 <p className="App-intro">
                     <UserList />
