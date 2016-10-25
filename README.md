@@ -151,7 +151,7 @@ Resolvers for our application
     }
 }
 ```
-Express
+Wire it up with Express
 ```javascript
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
 const apolloExpress = require('apollo-server').apolloExpress;
@@ -159,7 +159,12 @@ const graphiqlExpress = require('apollo-server').graphiqlExpress;
 
 const schema = require('./schema').schema;
 const resolvers = require('./resolvers').resolvers;
+````
 
+````javasrcipt
+app.use('*', cors())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const executableSchema = makeExecutableSchema({
     typeDefs: schema,
@@ -174,7 +179,7 @@ app.use('/graphql', apolloExpress((req) => {
 app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql'
 }));
-```
+````
 
 Test your queries in graphiql [http://localhost:8000/graphiql](http://localhost:8000/graphiql) 
 #Step 2
