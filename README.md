@@ -140,8 +140,8 @@ Test your queries and mutation in graphiql [http://localhost:8000/graphiql](http
 
 #Step 3
 
-0. (optional) Update your schema `apollo-codegen download-schema http://localhost:8000/graphql --output ./graphql.schema.json`
-1. Bootstrap Apollo client
+0.(optional) Update your schema `apollo-codegen download-schema http://localhost:8000/graphql --output ./graphql.schema.json`
+1.Bootstrap Apollo client
 ```javascript
 import { ApolloProvider } from "react-apollo";
 import ApolloClient, { createNetworkInterface } from "apollo-client";
@@ -161,7 +161,7 @@ ReactDOM.render(
 );
 
 ````
-2. Connect your react component with ApolloData (Users.js)
+2.Connect your react component with ApolloData (Users.js)
 
 ````javascript
 class Users extends Component {
@@ -184,7 +184,7 @@ const UsersQuery = gql`
 export default graphql(UsersQuery)(Users);
 
 ````
-3. Connect your react component (UserDetail) with ApolloData and using variables (UserDetail.js)
+3.Connect your react component (UserDetail) with ApolloData and using variables (UserDetail.js)
 ````javascript
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
