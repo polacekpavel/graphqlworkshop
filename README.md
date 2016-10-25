@@ -161,12 +161,36 @@ ReactDOM.render(
 );
 
 ````
+2. Connect your react component with ApolloData (Users.js)
 
-2. Connect your react containers with ApolloData
+````javascript
+class Users extends Component {
+ ...   
+}
+
+
+const UsersQuery = gql`
+    query getAllUsers {
+        users {
+            id
+            firstName,
+            lastName,
+            github {
+                username
+            }
+        }
+    }
+`;
+export default graphql(UsersQuery)(Users);
+
+````
+3. Connect your react component (UserDetail) with ApolloData and using variables (UserDetail.js)
 ````javascript
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-
+class UserDetail extends Component {
+ ...   
+}
 const UserDetailQuery = gql`
     query getUsersDetail($githubUsername: String!) {
         user(githubUsername: $githubUsername) {
