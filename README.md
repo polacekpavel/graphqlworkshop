@@ -140,7 +140,7 @@ Test your queries and mutation in graphiql [http://localhost:8000/graphiql](http
 
 #Step 3
 
-0.(optional) Update your schema `apollo-codegen download-schema http://localhost:8000/graphql --output ./graphql.schema.json`
+0.(optional) Update your schema `apollo-codegen download-schema http://localhost:8000/graphql --output ./graphql.schema.json`  
 1.Bootstrap Apollo client
 ```javascript
 import { ApolloProvider } from "react-apollo";
