@@ -21,9 +21,9 @@ class Users extends Component {
 
     render() {
 
-        let content = <div>
+        let content = <div>{/**/}
             {
-                !this.props.data.loading && this.props.data.users && this.props.data.users.filter((item) => item).map((item) => {
+                this.props.data.users && this.props.data.users.filter((item) => item).map((item) => {
                     return <div className="row" onClick={() => {
                         if (this.props.onClick) {
                             this.props.onClick(item);
