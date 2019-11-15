@@ -23,7 +23,7 @@
     "react-addons-update": "^15.3.2",
     "react-apollo": "^0.5.13",
     "react-dom": "^15.3.2",
-    "sequelize": "^3.24.5"
+    "sequelize": "^5.21.2"
   },
   "scripts": {
     "start": "react-scripts start",
